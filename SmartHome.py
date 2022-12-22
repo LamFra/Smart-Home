@@ -78,7 +78,12 @@ class SmartHome:
          the system turns on the smart light bulb as usual.
 
         """
-        pass
+        if self.check_room_occupancy():
+            self.light_on = True
+            GPIO.output(self.LIGHT_PIN, GPIO.HIGH)
+        else:
+            self.light_on = False
+            GPIO.output(self.LIGHT_PIN, GPIO.LOW)
 
     def measure_lux(self) -> float:
         """
@@ -123,3 +128,6 @@ class SmartHome:
         the system turns on the buzzer until the smoke level goes below the threshold of 500 PPM.
         """
         pass
+
+    def light_status(self):
+        return self.light_on
