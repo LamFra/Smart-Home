@@ -78,10 +78,10 @@ class SmartHome:
          the system turns on the smart light bulb as usual.
 
         """
-        if self.check_room_occupancy():
+        if self.measure_lux() < 500 and self.check_room_occupancy():
             self.light_on = True
             GPIO.output(self.LIGHT_PIN, GPIO.HIGH)
-        else:
+        elif self.measure_lux() >= 500:
             self.light_on = False
             GPIO.output(self.LIGHT_PIN, GPIO.LOW)
 
@@ -89,7 +89,7 @@ class SmartHome:
         """
         Measure the amount of lux inside the room by querying the photoresistor
         """
-        pass
+        return GPIO.input(self.PHOTO_PIN)
 
     def manage_window(self) -> None:
         """

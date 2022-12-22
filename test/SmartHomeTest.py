@@ -29,18 +29,37 @@ class SmartHomeTest(unittest.TestCase):
         occupancy = self.smart_home.check_room_occupancy()
         self.assertFalse(occupancy)
 
-    '''test: user-story 2'''
+    '''test: user-story 2 and 3'''
 
     @patch.object(GPIO, 'input')
-    def test_manage_light_level_true(self, mock_occupancy):
-        mock_occupancy.return_value = 0
+    def test_manage_light_level_true_low_lights_and_occupancy_true(self, mock_occupancy):
+        mock_occupancy.side_effect = [499, 0]
         self.smart_home.manage_light_level()
         light = self.smart_home.light_status()
         self.assertTrue(light)
 
     @patch.object(GPIO, 'input')
-    def test_manage_light_level_false(self, mock_occupancy):
-        mock_occupancy.return_value = 5
+    def test_manage_light_level_false_low_lights_and_occupancy_false(self, mock_occupancy):
+        mock_occupancy.side_effect = [499, 5, 500]
         self.smart_home.manage_light_level()
         light = self.smart_home.light_status()
         self.assertFalse(light)
+
+    @patch.object(GPIO, 'input')
+    def test_manage_light_level_false_high_lights_and_occupancy_true(self, mock_occupancy):
+        mock_occupancy.side_effect = [500, 0]
+        self.smart_home.manage_light_level()
+        light = self.smart_home.light_status()
+        self.assertFalse(light)
+
+    @patch.object(GPIO, 'input')
+    def test_manage_light_level_false_high_lights_and_occupancy_false(self, mock_occupancy):
+        mock_occupancy.side_effect = [500, 5, 500]
+        self.smart_home.manage_light_level()
+        light = self.smart_home.light_status()
+        self.assertFalse(light)
+
+
+
+
+
