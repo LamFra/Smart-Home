@@ -57,7 +57,10 @@ class SmartHome:
         Checks whether the infrared distance sensor on the ceiling detects something in front of it.
         :return: True if the infrared sensor detects something, False otherwise.
         """
-        pass
+        value = GPIO.input(self.INFRARED_PIN)
+        if value != 0:
+            return False
+        return True
 
     def manage_light_level(self) -> None:
         """
