@@ -81,3 +81,19 @@ class SmartHomeTest(unittest.TestCase):
         self.smart_home.manage_window()
         window = self.smart_home.window_status()
         self.assertFalse(window)
+
+    '''test: user-story 5'''
+
+    @patch.object(GPIO, 'input')
+    def test_monitor_air_quality_with_air_quality_lower_than_500(self, mock_air_quality):
+        mock_air_quality.return_value = 499
+        self.smart_home.monitor_air_quality()
+        buzzer = self.smart_home.buzzer_status()
+        self.assertFalse(buzzer)
+
+    @patch.object(GPIO, 'input')
+    def test_monitor_air_quality_with_air_quality_grather_than_500(self, mock_air_quality):
+        mock_air_quality.return_value = 501
+        self.smart_home.monitor_air_quality()
+        buzzer = self.smart_home.buzzer_status()
+        self.assertTrue(buzzer)

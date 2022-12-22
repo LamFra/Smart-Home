@@ -135,10 +135,18 @@ class SmartHome:
         if the amount of detected gas is greater than or equal to 500 PPM,
         the system turns on the buzzer until the smoke level goes below the threshold of 500 PPM.
         """
-        pass
+        if GPIO.input(self.AIR_QUALITY_PIN) < 500:
+            GPIO.output(self.BUZZER_PIN, GPIO.LOW)
+            self.buzzer_on = False
+        else:
+            GPIO.output(self.BUZZER_PIN, GPIO.HIGH)
+            self.buzzer_on = True
 
     def light_status(self):
         return self.light_on
 
     def window_status(self):
         return self.window_open
+
+    def buzzer_status(self):
+        return self.buzzer_on
