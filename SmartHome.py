@@ -104,9 +104,17 @@ class SmartHome:
         temperature in the range of 18 to 30 degrees celsius. Otherwise, the window stays closed.
         """
         try:
-            # Your code goes here
-            # Remove the pass
-            pass
+            if 18 <= self.dht_indoor.temperature <= 30 and 18 <= self.dht_outdoor.temperature <= 30:
+                if self.dht_indoor.temperature - 2 < self.dht_outdoor.temperature:
+                    self.window_open = True
+                    self.servo.ChangeDutyCycle(12)
+                elif self.dht_indoor.temperature > self.dht_outdoor.temperature + 2:
+                    self.window_open = False
+                    self.servo.ChangeDutyCycle(2)
+            else:
+                self.servo.ChangeDutyCycle(2)
+                self.window_open = False
+
         except RuntimeError as error:
             print(error.args[0])
             time.sleep(2)
@@ -131,3 +139,6 @@ class SmartHome:
 
     def light_status(self):
         return self.light_on
+
+    def window_status(self):
+        return self.window_open

@@ -59,7 +59,25 @@ class SmartHomeTest(unittest.TestCase):
         light = self.smart_home.light_status()
         self.assertFalse(light)
 
+    '''test: user-story 4'''
 
+    @patch('mock.adafruit_dht.DHT11.temperature', new_callable=PropertyMock)
+    def test_manage_window_false_with_indoor_and_outdoor_temperature_not_in_the_range(self, mock_temperature):
+        mock_temperature.side_effect = [32, 35, 0, 0, 0, 0]
+        self.smart_home.manage_window()
+        window = self.smart_home.window_status()
+        self.assertFalse(window)
 
+    @patch('mock.adafruit_dht.DHT11.temperature', new_callable=PropertyMock)
+    def test_manage_window_true_with_temperatures_in_the_range_and_indoor_lower_than_outdoor_temperature(self, mock_temperature):
+        mock_temperature.side_effect = [22, 24, 20, 24, 24, 24]
+        self.smart_home.manage_window()
+        window = self.smart_home.window_status()
+        self.assertTrue(window)
 
-
+    @patch('mock.adafruit_dht.DHT11.temperature', new_callable=PropertyMock)
+    def test_manage_window_false_with_temperatures_in_the_range_and_indoor_grather_than_outdoor_temperature(self, mock_temperature):
+        mock_temperature.side_effect = [24, 22, 24, 22, 24, 24]
+        self.smart_home.manage_window()
+        window = self.smart_home.window_status()
+        self.assertFalse(window)
