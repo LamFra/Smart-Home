@@ -23,5 +23,5 @@ The communication between the main board and the other components happens with G
 2. Manage smart light bulb based on occupancy: to control the behavior of the smart light bulb.
 3. Manage smart light bulb based on light level: to handle the additional constraint of the photoresistor measurements with the function to measure the amount of lux in the room.
 4. Open/close window based on temperature: to control the behavior of the window based on the temperature values. 
-The servo motor has already been configured and can be controlled by the Duty Cycle DC that is implemented according to this formula DC = (angle/18) + 2.
+The servo motor can be controlled by the Duty Cycle DC that is implemented according to this formula DC = (angle/18) + 2.
 5. Gas leak detection: to control the behavior of the air quality sensor and the buzzer.
