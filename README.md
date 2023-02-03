@@ -18,7 +18,9 @@ the air is detected.
 
 The communication between the main board and the other components happens with GPIO pins configured in BCM mode. 
 
-## User Stories 
+## Goals
+The goal of the project is to implement the following user stories writing the code of functions and testing them with the use of unit-testing in Python. The user stories are: 
+
 1. User detection: to verify whether the room has someone inside of it by using the infrared distance sensor.
 2. Manage smart light bulb based on occupancy: to control the behavior of the smart light bulb.
 3. Manage smart light bulb based on light level: to handle the additional constraint of the photoresistor measurements with the function to measure the amount of lux in the room.
